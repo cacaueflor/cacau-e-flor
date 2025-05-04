@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cacau & Flor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #fdf7f3;
+            color: #4a2e1e;
+        }
+        header {
+            background-color: #f5e7dd;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin: 0.5rem 0 1.5rem;
+        }
+        .btn {
+            background-color: #4a2e1e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        section {
+            padding: 2rem 1rem;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .catalogo, .galeria {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .produto, .foto {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            width: 250px;
+        }
+        .produto img, .foto img {
+            width: 100%;
+            height: auto;
+        }
+        .produto button {
+            background-color: #4a2e1e;
+            color: white;
+            padding: 0.5rem;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        #carrinho {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+        #carrinho ul {
+            list-style: none;
+            padding: 0;
+        }
+        #carrinho li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ccc;
+        }
+        .btn-finalizar {
+            margin-top: 1rem;
+            display: inline-block;
+            background-color: #4a2e1e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #4a2e1e;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Cacau & Flor</h1>
+    <p>Sabor e carinho em cada pedaço</p>
+    <a href="#catalogo" class="btn">Ver Catálogo</a>
+</header>
+
+<section id="sobre">
+    <h2>Sobre Nós</h2>
+    <p>Na Cacau & Flor, criamos doces com amor, cuidado e ingredientes de qualidade. Nossa missão é adoçar seus momentos com receitas que encantam o paladar.</p>
+    <p><strong>Retirada:</strong> QNO 5, Conjunto J, Casa 16</p>
+</section>
+
+<section id="catalogo">
+    <h2>Catálogo</h2>
+    <div class="catalogo">
+        <div class="produto">
+            <img src="https://via.placeholder.com/250x150.png?text=Bolo+no+pote" alt="Bolo no pote">
+            <h3>Bolo no pote</h3>
+            <p>Vários sabores</p>
+            <button onclick="adicionarProduto('Bolo no pote')">Adicionar ao Pedido</button>
+        </div>
+        <div class="produto">
+            <img src="https://via.placeholder.com/250x150.png?text=Alfajor" alt="Alfajor">
+            <h3>Alfajor</h3>
+            <button onclick="adicionarProduto('Alfajor')">Adicionar ao Pedido</button>
+        </div>
+        <div class="produto">
+            <img src="https://via.placeholder.com/250x150.png?text=Bolo+gelado" alt="Bolo gelado">
+            <h3>Bolo gelado</h3>
+            <button onclick="adicionarProduto('Bolo gelado')">Adicionar ao Pedido</button>
+        </div>
+    </div>
+</section>
+
+<section id="galeria">
+    <h2>Galeria de Fotos</h2>
+    <div class="galeria">
+        <div class="foto"><img src="https://via.placeholder.com/250x150.png?text=Foto+1" alt="Foto 1"></div>
+        <div class="foto"><img src="https://via.placeholder.com/250x150.png?text=Foto+2" alt="Foto 2"></div>
+        <div class="foto"><img src="https://via.placeholder.com/250x150.png?text=Foto+3" alt="Foto 3"></div>
+    </div>
+</section>
+
+<section id="carrinho">
+    <h2>Seu Carrinho</h2>
+    <ul id="listaCarrinho"></ul>
+    <label for="nomeCliente">Seu nome:</label>
+    <input type="text" id="nomeCliente" style="width:100%;padding:0.5rem;margin:0.5rem 0;">
+    <label for="infoEntrega">Endereço ou observação:</label>
+    <input type="text" id="infoEntrega" style="width:100%;padding:0.5rem;margin:0.5rem 0;">
+    <a id="finalizarPedido" class="btn-finalizar" href="#" target="_blank">Finalizar Pedido no WhatsApp</a>
+</section>
+
+<footer>
+    <p>Instagram: @_cacaueflor | WhatsApp: (61) 99374-2651</p>
+    <p>&copy; 2025 Cacau & Flor</p>
+</footer>
+
+<script>
+    let carrinho = [];
+
+    function adicionarProduto(produto) {
+        carrinho.push(produto);
+        atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+        const lista = document.getElementById('listaCarrinho');
+        lista.innerHTML = '';
+        carrinho.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            lista.appendChild(li);
+        });
+
+        const nome = document.getElementById('nomeCliente').value;
+        const entrega = document.getElementById('infoEntrega').value;
+        const mensagem = encodeURIComponent(
+            "Olá! Gostaria de fazer um pedido na Cacau & Flor:%0A" +
+            carrinho.map(p => "- " + p).join("%0A") +
+            `%0A%0ANome: ${nome}%0AEntrega/Observações: ${entrega}`
+        );
+        const link = "https://wa.me/5561993742651?text=" + mensagem;
+        document.getElementById('finalizarPedido').href = link;
+    }
+
+    document.getElementById('nomeCliente').addEventListener('input', atualizarCarrinho);
+    document.getElementById('infoEntrega').addEventListener('input', atualizarCarrinho);
+</script>
+
+</body>
+</html>
